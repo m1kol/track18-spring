@@ -1,6 +1,11 @@
 package ru.track;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+
+import static java.lang.Integer.parseInt;
+import static org.apache.commons.lang3.StringUtils.isNumeric;
 
 
 /**
@@ -40,7 +45,23 @@ public class CountWords {
      * @return - целое число - сумма всех чисел из файла
      */
     public long countNumbers(File file) throws Exception {
-        return 0;
+        FileReader fileReader = new FileReader(file);
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
+        long result = 0;
+        int num;
+        String line;
+
+        while ((line = bufferedReader.readLine()) != null)
+        {
+            try {
+                num = parseInt(line);
+                result += num;
+            } catch (NumberFormatException e){
+                //
+            }
+        }
+
+        return result;
     }
 
 
@@ -52,7 +73,43 @@ public class CountWords {
      * @return - результирующая строка
      */
     public String concatWords(File file) throws Exception {
-        return null;
+        StringBuilder resultBuilder = new StringBuilder();
+        FileReader fileReader = new FileReader(file);
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
+        String line, result;
+
+        while ((line = bufferedReader.readLine()) != null)
+        {
+            if (isNumeric(line) | line.equals(skipWord))
+            {
+                continue;
+            }
+            resultBuilder.append(line);
+            resultBuilder.append(" ");
+        }
+        result = resultBuilder.toString();
+
+        return result;
+    }
+
+    public static void main (String args[])
+    {
+        CountWords obj = new CountWords("");
+        File file = new File ("/home/mkolesov/track18-spring/L2-objects/words.txt");
+        try {
+            long number = obj.countNumbers(file);
+            System.out.println("number = " + number);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            String line = obj.concatWords(file);
+            System.out.println(line);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
     }
 
 }
