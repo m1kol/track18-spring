@@ -92,10 +92,7 @@ public class Analyzer {
 
         List<Integer> listValues = new ArrayList<>(values);
         listValues.sort((o1, o2) -> {
-            System.out.println()
-
-
-            ;
+            System.out.println();
             return o2 - o1;
         });
         //System.out.printf("before:\t%s\nafter:\t%s\n", values, listValues);
