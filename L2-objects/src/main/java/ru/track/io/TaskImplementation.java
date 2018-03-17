@@ -46,9 +46,9 @@ public final class TaskImplementation implements FileEncoder {
                 case 3:
                     byte ch = (byte) toBase64[((buf[0] & 252) >> 2)];
                     outputStream.write(ch);
-                    ch = (byte) toBase64[buf[0] & 3 + ((buf[1] & 240) >>> 4)];
+                    ch = (byte) toBase64[((buf[0] & 3) << 4) | ((buf[1] & 240) >>> 4)];
                     outputStream.write(ch);
-                    ch = (byte) toBase64[buf[1] & 15 + ((buf[2] & 192) >>> 6)];
+                    ch = (byte) toBase64[((buf[1] & 15) << 2) | ((buf[2] & 192) >>> 6)];
                     outputStream.write(ch);
                     ch = (byte) toBase64[buf[2] & 63];
                     outputStream.write(ch);
@@ -57,9 +57,9 @@ public final class TaskImplementation implements FileEncoder {
                 case 2:
                     ch = (byte) toBase64[((buf[0] & 252) >>> 2)];
                     outputStream.write(ch);
-                    ch = (byte) toBase64[buf[0] & 3 + ((buf[1] & 240) >>> 4)];
+                    ch = (byte) toBase64[((buf[0] & 3) << 4) | ((buf[1] & 240) >>> 4)];
                     outputStream.write(ch);
-                    ch = (byte) toBase64[buf[1] & 15];
+                    ch = (byte) toBase64[((buf[1] & 15) << 2) | ((buf[2] & 192) >>> 6)];
                     outputStream.write(ch);
                     ch = '=';
                     outputStream.write(ch);
@@ -68,7 +68,7 @@ public final class TaskImplementation implements FileEncoder {
                 case 1:
                     ch = (byte) toBase64[((buf[0] & 252) >>> 2)];
                     outputStream.write(ch);
-                    ch = (byte) toBase64[buf[0] & 3];
+                    ch = (byte) toBase64[(buf[0] & 3) << 4];
                     outputStream.write(ch);
                     ch = (byte) '=';
                     outputStream.write(ch);
