@@ -23,10 +23,13 @@ public class Encoder {
     public String encode(@NotNull Map<Character, Character> cypherTable, @NotNull String text) {
         StringBuilder encodedBuilder = new StringBuilder();
         for (int i = 0; i < text.length(); i++) {
-
-            encodedBuilder.append(text.charAt(i));
+            char ch = text.charAt(i);
+            if (Character.isLetter(ch))
+                encodedBuilder.append(cypherTable.get(Character.toLowerCase(ch)));
+            else
+                encodedBuilder.append(ch);
         }
 
-        return null;
+        return encodedBuilder.toString();
     }
 }
