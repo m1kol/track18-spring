@@ -67,9 +67,14 @@ public class Decoder {
         Map<Character, Integer> retMap = new HashMap<>();
         for (int i = 0; i < text.length(); i++) {
             char letter = text.charAt(i);
-            if (Character.isLetter(letter)) {
-                if (retMap.containsKey(letter))
-                    retMap.put(letter, retMap.get(letter)+1);
+            if (letter >= 'A' && letter <= 'Z' || letter >= 'a' && letter <= 'z') {
+                if (letter < 'Z') {
+                    letter += SYMBOL_DIST;
+                }
+                if (retMap.containsKey(letter)) {
+                    int val = retMap.get(letter);
+                    retMap.put(letter, val+1);
+                }
                 else retMap.put(letter, 1);
             }
         }
