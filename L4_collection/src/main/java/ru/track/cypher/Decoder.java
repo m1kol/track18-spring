@@ -23,7 +23,11 @@ public class Decoder {
 
         cypher = new LinkedHashMap<>();
 
+        Iterator<Character> domainIter = domainHist.keySet().iterator();
 
+        for (Character character : encryptedDomainHist.keySet()) {
+            cypher.put(character, domainIter.next());
+        }
     }
 
     public Map<Character, Character> getCypher() {
@@ -38,7 +42,15 @@ public class Decoder {
      */
     @NotNull
     public String decode(@NotNull String encoded) {
-        return null;
+        StringBuilder decodedStr = new StringBuilder();
+        for (int i = 0; i < encoded.length(); i++) {
+            char ch = encoded.charAt(i);
+            if (Character.isLetter(ch))
+                decodedStr.append(cypher.get(Character.toLowerCase(ch)));
+            else decodedStr.append(ch);
+        }
+
+        return decodedStr.toString();
     }
 
     /**
