@@ -1,8 +1,6 @@
 package ru.track.cypher;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -64,7 +62,15 @@ public class Decoder {
             }
         }
 
-        return null;
+        List<Map.Entry<Character, Integer>> list = new ArrayList<>(retMap.entrySet());
+
+        list.sort((o1, o2) -> o2.getValue() - o1.getValue());
+
+        Map<Character, Integer> sortedRetMap = new LinkedHashMap<>();
+        for (Map.Entry<Character, Integer> entry: list)
+            sortedRetMap.put(entry.getKey(), entry.getValue());
+
+        return sortedRetMap;
     }
 
 }
